@@ -33,12 +33,14 @@ const Result = () => {
   )
 }
 
-const Game = ({question, onClickVariant}) => {
+const Game = ({question, onClickVariant, step}) => {
+
+  const percent = Math.round((step / questions.length * 100));
 
   return (
     <>
       <div className="progress">
-        <div style ={{width: '50%'}} className="progress__inner"></div>
+        <div style ={{width: `${percent}%`}} className="progress__inner"></div>
       </div>
       <h1>{question.title}</h1>
       <ul>
@@ -53,16 +55,14 @@ const Game = ({question, onClickVariant}) => {
 function App() {
   const [step, setStep] = useState(0);
   const question = questions[step];
-  console.log(question)
 
-  const onClickVariant = (index) => {
-    console.log(step, index)
+  const onClickVariant = () => {
     setStep(step + 1)
   }
 
   return (
     <div className="App">
-      <Game question={question} onClickVariant={onClickVariant}/>
+      <Game step={step} question={question} onClickVariant={onClickVariant}/>
       {/* <Result/> */}
     </div>
   );
