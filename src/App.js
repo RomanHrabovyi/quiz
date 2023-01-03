@@ -1,4 +1,4 @@
-
+import React, {useState} from 'react';
 import './App.scss';
 
 const questions = [
@@ -33,26 +33,36 @@ const Result = () => {
   )
 }
 
-const Game = () => {
+const Game = ({question, onClickVariant}) => {
+
   return (
     <>
-      <div className="progres">
-        <div style ={{width: '50%'}}className="progress__inner"></div>
+      <div className="progress">
+        <div style ={{width: '50%'}} className="progress__inner"></div>
       </div>
-      <h1>Що...?</h1>
+      <h1>{question.title}</h1>
       <ul>
-        <li>Відповіді</li>
-        <li>Відповіді</li>
-        <li>Відповіді</li>
+        {question.variants.map((item, index) => {
+          return <li key={item} onClick={() => onClickVariant(index)}>{item}</li>
+        })}
       </ul>
     </>
   )
 }
 
 function App() {
+  const [step, setStep] = useState(0);
+  const question = questions[step];
+  console.log(question)
+
+  const onClickVariant = (index) => {
+    console.log(step, index)
+    setStep(step + 1)
+  }
+
   return (
     <div className="App">
-      <Game/>
+      <Game question={question} onClickVariant={onClickVariant}/>
       {/* <Result/> */}
     </div>
   );
