@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Result from './Result';
+import Game from './Game';
 import './App.scss';
 
 const questions = [
@@ -23,37 +25,6 @@ const questions = [
   } 
 ]
 
-const Result = ({correct}) => {
-  return (
-    <div className="result">
-      <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" alt="" />
-      <h2>Ви відгадали {correct} відповіді з {questions.length}</h2>
-      <a href="/">
-        <button>Спробувати ще</button>
-      </a>
-    </div>
-  )
-}
-
-const Game = ({question, onClickVariant, step}) => {
-
-  const percent = Math.round((step / questions.length * 100));
-
-  return (
-    <>
-      <div className="progress">
-        <div style ={{width: `${percent}%`}} className="progress__inner"></div>
-      </div>
-      <h1>{question.title}</h1>
-      <ul>
-        {question.variants.map((item, index) => {
-          return <li key={item} onClick={() => onClickVariant(index)}>{item}</li>
-        })}
-      </ul>
-    </>
-  )
-}
-
 function App() {
   const [step, setStep] = useState(0);
   const [correct, setCorrect] = useState(0);
@@ -72,8 +43,12 @@ function App() {
     <div className="App">
       {
         step !== questions.length ? 
-        <Game step={step} question={question} onClickVariant={onClickVariant}/> :
-        <Result correct={correct}/>
+        <Game step={step} 
+              question={question} 
+              onClickVariant={onClickVariant} 
+              questions={questions}/> :
+        <Result correct={correct} 
+                questions={questions}/>
       }
     </div>
   );
